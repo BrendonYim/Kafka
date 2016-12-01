@@ -1,0 +1,15 @@
+Kafka_Home/
+
+kafka-producer/.gradle/
+kafka-producer/.idea/
+kafka-producer/build/
+kafka-producer.iml
+kafka-producer.ipr
+kafka-producer.iws
+
+kafka-consumer/.gradle/
+kafka-consumer/.idea/
+kafka-consumer/build/
+kafka-consumer.iml
+kafka-consumer.ipr
+kafka-consumer.iws
