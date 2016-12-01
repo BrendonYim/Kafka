@@ -33,9 +33,11 @@ public class Consumer extends ShutdownableThread {
   @Override
   public void execute() {
     _consumer.subscribe(Collections.singletonList(_topic));
-    ConsumerRecords<Integer, String> records = _consumer.poll(1000);
-    for (ConsumerRecord<Integer, String> record : records) {
-      System.out.println("key: " + record.key() + ", value: " + record.value() + ", offset: " + record.offset());
+    while (true) {
+      ConsumerRecords<Integer, String> records = _consumer.poll(2000);
+      for (ConsumerRecord<Integer, String> record : records) {
+        System.out.println("key: " + record.key() + ", value: " + record.value() + ", offset: " + record.offset());
+      }
     }
   }
 }

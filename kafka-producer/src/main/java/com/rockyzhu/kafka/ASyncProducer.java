@@ -32,6 +32,10 @@ public class ASyncProducer extends Thread {
       long startTime = System.currentTimeMillis();
       _producer.send(new ProducerRecord<>(_topic, messageNum, message), new ASyncProducerCallback(message, startTime));
       messageNum++;
+      try {
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
+      }
     }
   }
 
