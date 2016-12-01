@@ -29,8 +29,7 @@ public class ASyncProducer extends Thread {
     int messageNum = 1;
     while (true) {
       String message = "Message_" + messageNum;
-      long startTime = System.currentTimeMillis();
-      _producer.send(new ProducerRecord<>(_topic, messageNum, message), new ASyncProducerCallback(message, startTime));
+      _producer.send(new ProducerRecord<>(_topic, messageNum, message), new ASyncProducerCallback(messageNum, message));
       messageNum++;
       try {
         Thread.sleep(1000);
@@ -41,21 +40,20 @@ public class ASyncProducer extends Thread {
 
   private class ASyncProducerCallback implements Callback {
 
+    private final int _messageNum;
     private final String _message;
-    private final long _startTime;
 
-    public ASyncProducerCallback(String message, long startTime) {
+    public ASyncProducerCallback(int messageNum, String message) {
+      _messageNum = messageNum;
       _message = message;
-      _startTime = startTime;
     }
 
     @Override
     public void onCompletion(RecordMetadata metadata, Exception exception) {
       if (metadata != null) {
-        long endTime = System.currentTimeMillis();
-        System.out.println(_message + " sent to partition " + metadata.partition() + " at: " + _startTime + " done at: " + endTime);
+        System.out.println("key: " + _messageNum + ", value: " + _message + " sent to partition " + metadata.partition() + ", offset: " + metadata.offset());
       } else {
-        // ignore exception
+        System.out.println("Failed to send " + _message);
       }
     }
   }
