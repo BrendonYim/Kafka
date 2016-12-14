@@ -16,7 +16,7 @@ public class Consumer extends ShutdownableThread {
   private final KafkaConsumer<Integer, String> _consumer;
   private final String _topic;
 
-  public Consumer(String topic) {
+  public Consumer(String topic, String groupId) {
     super("KafkaConsumerExample", false);
     _topic = topic;
     Properties properties = new Properties();
@@ -27,6 +27,7 @@ public class Consumer extends ShutdownableThread {
     properties.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "30000");
     properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.IntegerDeserializer");
     properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
+    properties.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
     _consumer = new KafkaConsumer<>(properties);
   }
 
@@ -36,7 +37,7 @@ public class Consumer extends ShutdownableThread {
     while (true) {
       ConsumerRecords<Integer, String> records = _consumer.poll(2000);
       for (ConsumerRecord<Integer, String> record : records) {
-        System.out.println("key: " + record.key() + ", value: " + record.value() + ", offset: " + record.offset());
+        System.out.println("topic:" + _topic + "key: " + record.key() + ", value: " + record.value() + ", offset: " + record.offset());
       }
     }
   }

@@ -5,7 +5,7 @@ package com.rockyzhu.kafka;
  */
 public class Main {
   public static void main(String[] args) {
-    ASyncProducer aSyncProducer = new ASyncProducer("our-first-topic");
+    ASyncProducerDemo aSyncProducer = new ASyncProducerDemo(args[0], Integer.valueOf(args[1]), Integer.valueOf(args[2]));
     aSyncProducer.start();
   }
 }

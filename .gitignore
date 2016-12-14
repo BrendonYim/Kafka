@@ -3,6 +3,10 @@ Kafka_Home/
 kafka-producer/.gradle/
 kafka-producer/.idea/
 kafka-producer/build/
+kafka-producer/gradle/
+kafka-producer/out/
+kafka-producer/gradlew
+kafka-producer/gradlew.bat
 kafka-producer.iml
 kafka-producer.ipr
 kafka-producer.iws
@@ -10,6 +14,10 @@ kafka-producer.iws
 kafka-consumer/.gradle/
 kafka-consumer/.idea/
 kafka-consumer/build/
+kafka-consumer/gradle/
+kafka-consumer/out/
+kafka-consumer/gradlew
+kafka-consumer/gradlew.bat
 kafka-consumer.iml
 kafka-consumer.ipr
 kafka-consumer.iws

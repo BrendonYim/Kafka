@@ -10,12 +10,16 @@ import java.util.Properties;
 /**
  * Created by hozhu on 11/30/16.
  */
-public class ASyncProducer extends Thread {
+public class ASyncProducerDemo extends Thread {
 
   private final String _topic;
   private final KafkaProducer<Integer, String> _producer;
+  private final int _step;
+  private final int _start;
 
-  public ASyncProducer(String topic) {
+  public ASyncProducerDemo(String topic, int start, int step) {
+    _start = start;
+    _step = step;
     _topic = topic;
     Properties properties = new Properties();
     properties.put("bootstrap.servers",  "localhost:9092");
@@ -26,11 +30,11 @@ public class ASyncProducer extends Thread {
   }
 
   public void run() {
-    int messageNum = 1;
+    int messageNum = _start;
     while (true) {
       String message = "Message_" + messageNum;
       _producer.send(new ProducerRecord<>(_topic, messageNum, message), new ASyncProducerCallback(messageNum, message));
-      messageNum++;
+      messageNum += _step;
       try {
         Thread.sleep(1000);
       } catch (InterruptedException e) {
@@ -51,7 +55,7 @@ public class ASyncProducer extends Thread {
     @Override
     public void onCompletion(RecordMetadata metadata, Exception exception) {
       if (metadata != null) {
-        System.out.println("key: " + _messageNum + ", value: " + _message + " sent to partition " + metadata.partition() + ", offset: " + metadata.offset());
+        System.out.println("topic:" + _topic + "key: " + _messageNum + ", value: " + _message + " sent to partition " + metadata.partition() + ", offset: " + metadata.offset());
       } else {
         System.out.println("Failed to send " + _message);
       }
